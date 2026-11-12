@@ -1,0 +1,32 @@
+services:
+  - type: web
+    name: tiktok-video-downloader
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    plan: starter
+    region: frankfurt
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3000
+      # Generated once by Render and kept stable across deploys.
+      - key: TOKEN_SECRET
+        generateValue: true
+      - key: ENABLE_TIKTOK_WEB
+        value: "true"
+      - key: ENABLE_TIKWM
+        value: "true"
+      - key: ENABLE_OEMBED
+        value: "true"
+      # Optional paid fallback — leave empty to disable.
+      - key: RAPIDAPI_KEY
+        sync: false
+      - key: RAPIDAPI_HOST
+        value: tiktok-scraper7.p.rapidapi.com
+      - key: MAX_CONCURRENT_JOBS
+        value: "2"
+      - key: CACHE_TTL_SECONDS
+        value: "480"
